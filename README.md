@@ -1,56 +1,61 @@
-# Welcome to your Expo app 👋
+# Brota Puebla
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App iOS, Android y web para vender y regalar plantas en Puebla con entrega programada de marca Brota.
 
-## Get started
+## Producto
 
-1. Install dependencies
+Brota combina tienda, regalo y tracking:
 
-   ```bash
-   npm install
-   ```
+- `Tienda`: catalogo de plantas comunes y faciles de abastecer en Puebla/Atlixco.
+- `Regalar`: builder de ocasion, mensaje, paquete, planta y checkout express.
+- `Track`: estado de pedido con fecha, ventana programada, equipo Brota, notas y confirmacion de entrega.
+- `Ops`: panel fundador con costos, precios, margen bruto, lote piloto y abastecimiento.
 
-2. Start the app
+## Stack
 
-   ```bash
-   npx expo start
-   ```
+- Expo SDK 55
+- React Native 0.83
+- React 19.2
+- Expo Router
+- TypeScript
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Comandos
 
 ```bash
-npm run reset-project
+npm install
+npm run web
+npm run ios
+npm run android
+npm run serve:web
+npm run lint
+npx tsc --noEmit
+npx expo export --platform web
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Build web local
 
-### Other setup steps
+El export estatico queda en `dist`.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+npx expo export --platform web
+npm run serve:web
+```
 
-## Learn more
+## Modelo de catalogo
 
-To learn more about developing your project with Expo, look at the following resources:
+Los datos viven en `src/data/catalog.ts`. Cada planta incluye:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- costo estimado de adquisicion
+- costo de preparacion/empaque
+- reserva de entrega
+- precio al cliente
+- margen bruto calculado
+- dificultad de cuidado, luz, riego, pet friendliness, disponibilidad y linea de regalo
 
-## Join the community
+La estrategia de margen usa plantas de alta rotacion y bajo riesgo logistico como pothos, sansevieria, zamioculca, peperomia, cinta, palma de salon, echeveria, haworthia, aloe, cuna de Moises, anturio, romero y lavanda. El panel `Ops` deja visible el calculo para operar el negocio, pero esa informacion no deberia mostrarse a clientes en produccion.
 
-Join our community of developers creating universal apps.
+## Fuentes de mercado consultadas
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Viveros de Atlixco/Cabrera con plantas desde $15 MXN y variedad de sombra, interior, cuna de Moises, alcatraces, cactaceas y gerberas: https://municipiospuebla.mx/nota/de-paseo/los-viveros-de-atlixco-una-belleza-que-debes-conocer
+- Produccion durante todo el año en Cabrera, Atlixco: https://www.lajornadadeoriente.com.mx/puebla/atlixco-cabrera-produccion-plantas-nochebuenas-cempasuchil/
+- Expo SDK 55 y versiones base: https://docs.expo.dev/versions/v55.0.0

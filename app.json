@@ -1,21 +1,23 @@
 {
   "expo": {
-    "name": "construye-una-app-para-ios-y",
-    "slug": "construye-una-app-para-ios-y",
+    "name": "Brota Puebla",
+    "slug": "brota-puebla",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "construyeunaappparaiosy",
+    "icon": "./assets/images/brota-icon.png",
+    "scheme": "brota",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/brota-icon.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.brota.puebla"
     },
     "android": {
+      "package": "com.brota.puebla",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "backgroundColor": "#FFFDF7",
+        "foregroundImage": "./assets/images/brota-icon.png",
+        "monochromeImage": "./assets/images/brota-icon.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -28,9 +30,11 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#FFFDF7",
+          "image": "./assets/images/brota-icon.png",
+          "imageWidth": 76,
           "android": {
-            "image": "./assets/images/splash-icon.png",
+            "image": "./assets/images/brota-icon.png",
             "imageWidth": 76
           }
         }

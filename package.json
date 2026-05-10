@@ -1,13 +1,13 @@
 {
-  "name": "construye-una-app-para-ios-y",
+  "name": "brota-puebla",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "serve:web": "node scripts/serve-static.mjs 8082",
     "lint": "expo lint"
   },
   "dependencies": {
@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~55.0.0",
     "typescript": "~5.9.2"
   },
   "private": true
