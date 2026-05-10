@@ -13,17 +13,17 @@ import {
 } from '@/data/catalog';
 
 export const palette = {
-  ink: '#12221C',
-  forest: '#123F2A',
+  ink: '#111A17',
+  forest: '#102E22',
   leaf: '#1B8A5A',
-  lime: '#C9F24D',
-  coral: '#FF6F59',
-  blue: '#1479A6',
-  mint: '#E9F9EE',
-  paper: '#FFFDF7',
-  cloud: '#F4F7F2',
-  line: '#D9E1D6',
-  muted: '#65756B',
+  lime: '#D8F27A',
+  coral: '#C9624D',
+  blue: '#2F6F7E',
+  mint: '#EDF6EF',
+  paper: '#FAF8F1',
+  cloud: '#F3F0E7',
+  line: '#E2DED3',
+  muted: '#6F756D',
   white: '#FFFFFF',
 };
 
@@ -216,14 +216,14 @@ export function PlantCard({
 }) {
   return (
     <View style={[styles.plantCard, selected && styles.plantCardSelected]}>
-      <View style={styles.plantTopRow}>
-        <View>
-          <Text style={[styles.plantCategory, plant.hero && styles.plantCategoryHero]}>
-            {plant.hero ? 'Firma Brota' : plant.category}
-          </Text>
-          <Text style={styles.plantName}>{plant.name}</Text>
-        </View>
-        <MiniPlantVisual plant={plant} compact />
+      <View style={styles.plantArtStage}>
+        <MiniPlantVisual plant={plant} />
+      </View>
+      <View style={styles.plantTitleBlock}>
+        <Text style={[styles.plantCategory, plant.hero && styles.plantCategoryHero]}>
+          {plant.hero ? 'Firma Brota' : plant.category}
+        </Text>
+        <Text style={styles.plantName}>{plant.name}</Text>
       </View>
       <Text style={styles.plantNickname}>{plant.nickname}</Text>
       <Text style={styles.plantCare} numberOfLines={2}>
@@ -240,10 +240,6 @@ export function PlantCard({
         <View style={styles.smallTag}>
           <AppIcon name={icons.leaf} color={palette.leaf} size={12} />
           <Text style={styles.smallTagText}>{plant.petFriendly}</Text>
-        </View>
-        <View style={styles.smallTag}>
-          <AppIcon name={icons.spark} color={palette.leaf} size={12} />
-          <Text style={styles.smallTagText}>{plant.hero ? 'Firma Brota' : 'Regalo vivo'}</Text>
         </View>
       </View>
       <Text style={styles.giftFit} numberOfLines={2}>
@@ -263,7 +259,11 @@ export function PlantCard({
           <Text style={styles.price}>{formatMXN(plant.retailPrice)}</Text>
           {showMargin ? <Text style={styles.profit}>+{formatMXN(netProfitAfterDelivery(plant))}</Text> : null}
         </View>
-        <Pressable onPress={onAdd} style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Elegir ${plant.name}`}
+          onPress={onAdd}
+          style={({ pressed }) => [styles.addButton, selected && styles.addButtonSelected, pressed && styles.pressed]}>
           <AppIcon name={selected ? icons.cart : icons.plus} color={palette.paper} size={16} />
         </Pressable>
       </View>
@@ -330,14 +330,14 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 860,
     alignSelf: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingHorizontal: 18,
+    paddingTop: spacing.lg,
   },
   brandHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: spacing.lg,
+    marginBottom: 20,
   },
   brandLeft: {
     flexDirection: 'row',
@@ -345,14 +345,14 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   brandLogo: {
-    width: 42,
-    height: 42,
+    width: 44,
+    height: 44,
     borderRadius: 8,
     backgroundColor: palette.paper,
   },
   brandName: {
     color: palette.ink,
-    fontSize: 26,
+    fontSize: 27,
     fontWeight: '900',
     letterSpacing: 0,
   },
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   sectionHeader: {
-    marginTop: spacing.xl,
+    marginTop: spacing.xxl,
     marginBottom: spacing.md,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -392,7 +392,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: palette.ink,
-    fontSize: 22,
+    fontSize: 24,
+    lineHeight: 29,
     fontWeight: '900',
     letterSpacing: 0,
   },
@@ -407,8 +408,8 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   chip: {
-    minHeight: 38,
-    paddingHorizontal: spacing.md,
+    minHeight: 42,
+    paddingHorizontal: 14,
     paddingVertical: spacing.sm,
     borderRadius: 8,
     borderWidth: 1,
@@ -431,10 +432,10 @@ const styles = StyleSheet.create({
     color: palette.paper,
   },
   cta: {
-    minHeight: 48,
+    minHeight: 52,
     borderRadius: 8,
     backgroundColor: palette.leaf,
-    paddingLeft: spacing.lg,
+    paddingLeft: 18,
     paddingRight: spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
@@ -470,8 +471,8 @@ const styles = StyleSheet.create({
     backgroundColor: palette.mint,
   },
   plantVisual: {
-    width: 104,
-    height: 112,
+    width: 112,
+    height: 120,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
@@ -520,30 +521,37 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
   },
   plantCard: {
-    width: 232,
-    minHeight: 382,
+    width: 248,
+    minHeight: 430,
     borderRadius: 8,
-    padding: spacing.lg,
+    padding: 18,
     backgroundColor: palette.white,
     borderWidth: 1,
-    borderColor: palette.line,
+    borderColor: '#E8E1D5',
     shadowColor: '#0D221B',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.08,
-    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.06,
+    shadowRadius: 22,
   },
   plantCardSelected: {
     borderColor: palette.leaf,
-    backgroundColor: palette.mint,
+    backgroundColor: '#F4FAF4',
   },
-  plantTopRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: spacing.sm,
+  plantArtStage: {
+    minHeight: 150,
+    borderRadius: 8,
+    backgroundColor: '#F6F1E7',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.md,
+    overflow: 'hidden',
+  },
+  plantTitleBlock: {
+    gap: 2,
   },
   plantCategory: {
     color: palette.coral,
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '900',
     textTransform: 'uppercase',
   },
@@ -552,9 +560,10 @@ const styles = StyleSheet.create({
   },
   plantName: {
     color: palette.ink,
-    fontSize: 19,
+    fontSize: 22,
+    lineHeight: 25,
     fontWeight: '900',
-    maxWidth: 134,
+    maxWidth: 202,
     letterSpacing: 0,
   },
   plantNickname: {
@@ -565,10 +574,10 @@ const styles = StyleSheet.create({
   },
   plantCare: {
     marginTop: spacing.xs,
-    minHeight: 54,
+    minHeight: 44,
     color: palette.muted,
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 13,
+    lineHeight: 19,
     fontWeight: '600',
   },
   plantMeta: {
@@ -582,13 +591,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.xs,
     flexWrap: 'wrap',
-    marginTop: spacing.sm,
+    marginTop: spacing.md,
   },
   smallTag: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.xs,
-    backgroundColor: palette.cloud,
+    backgroundColor: '#F8F5EE',
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     borderRadius: 8,
@@ -633,7 +642,7 @@ const styles = StyleSheet.create({
   },
   priceRow: {
     marginTop: 'auto',
-    paddingTop: spacing.md,
+    paddingTop: 18,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -641,7 +650,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: palette.ink,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '900',
   },
   profit: {
@@ -650,18 +659,23 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   addButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 8,
     backgroundColor: palette.forest,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  addButtonSelected: {
+    backgroundColor: palette.leaf,
+  },
   metricTile: {
     flex: 1,
-    minWidth: 132,
+    minWidth: 142,
     borderRadius: 8,
-    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: 'rgba(17,26,23,0.06)',
+    padding: spacing.lg,
   },
   metricTop: {
     flexDirection: 'row',
@@ -674,7 +688,7 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     marginTop: spacing.sm,
-    fontSize: 22,
+    fontSize: 21,
     fontWeight: '900',
     letterSpacing: 0,
   },
@@ -697,7 +711,7 @@ const styles = StyleSheet.create({
   },
   timelineDotActive: {
     borderColor: palette.leaf,
-    backgroundColor: palette.lime,
+    backgroundColor: '#CFEFBE',
   },
   timelineLine: {
     flex: 1,

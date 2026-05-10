@@ -1,15 +1,15 @@
 # Brota Puebla
 
-App iOS, Android y web para vender y regalar plantas en Puebla con entrega programada de marca Brota.
+Brota Puebla is a premium plant gifting app for iOS, Android, and web. It turns plant delivery into an elegant gifting experience with curated products, personalized notes, premium wrapping, scheduled delivery windows, and simple care guidance.
 
-## Producto
+## Product
 
-Brota combina tienda, regalo y tracking:
+Brota is designed as a modern consumer brand, not a traditional nursery. The app focuses on emotional gifting, visual product discovery, and a polished mobile-first flow.
 
-- `Tienda`: catalogo de plantas comunes y faciles de abastecer en Puebla/Atlixco.
-- `Regalar`: builder de ocasion, mensaje, paquete, planta y checkout express.
-- `Track`: estado de pedido con fecha, ventana programada, equipo Brota, notas y confirmacion de entrega.
-- `Ops`: panel fundador con costos, precios, margen bruto, lote piloto y abastecimiento.
+- `Tienda`: editorial plant catalog with premium product cards.
+- `Regalar`: occasion-based gift builder with bundle, plant, note, recipient, and delivery zone selection.
+- `Estado`: order status with scheduled delivery window, preparation steps, and delivery confirmation.
+- `Brota brand system`: custom visual language, plant illustrations, premium colors, and mobile-first interactions.
 
 ## Stack
 
@@ -19,11 +19,16 @@ Brota combina tienda, regalo y tracking:
 - Expo Router
 - TypeScript
 
-## Comandos
+## Getting Started
 
 ```bash
 npm install
 npm run web
+```
+
+Other useful commands:
+
+```bash
 npm run ios
 npm run android
 npm run serve:web
@@ -32,30 +37,34 @@ npx tsc --noEmit
 npx expo export --platform web
 ```
 
-## Build web local
+## Local Web Build
 
-El export estatico queda en `dist`.
+The static web export is generated into `dist`.
 
 ```bash
 npx expo export --platform web
 npm run serve:web
 ```
 
-## Modelo de catalogo
+## Experience Highlights
 
-Los datos viven en `src/data/catalog.ts`. Cada planta incluye:
+- Premium gifting flow with personalized messages.
+- Scheduled delivery windows instead of live GPS tracking.
+- Elegant product cards with care difficulty, light, watering, and pet-safety guidance.
+- Gift-focused bundles for birthdays, romance, new apartments, easy-care starters, and signature moments.
+- Empty and active order states for a cleaner customer experience.
 
-- costo estimado de adquisicion
-- costo de envoltura negra premium, tarjeta y guia QR
-- reserva de entrega
-- precio al cliente
-- margen bruto antes de entrega y margen neto posterior a reserva
-- dificultad de cuidado, luz, riego, pet friendliness, disponibilidad, riesgo operativo y linea de regalo
+## Project Structure
 
-La estrategia de lanzamiento usa plantas de alta rotacion y bajo riesgo logistico como Palo de Brasil, Arbol de la abundancia, Suculenta conchita, Janet Craig compacta, Aloe vera, Pinanona 8, Liston y Sansevierias mix, con premium SKUs como Monstera pinanona, Palma areca, Bromelia, Xanadu, Orquideas y Ave de paraiso. El panel `Ops` deja visible el calculo para operar el negocio, pero esa informacion no deberia mostrarse a clientes en produccion.
+- `src/app`: Expo Router screens.
+- `src/components/brota`: Brota UI primitives and shared visual components.
+- `src/data/catalog.ts`: product catalog, bundles, and delivery zones.
+- `src/state/order.tsx`: in-app order state for the prototype flow.
+- `assets/images`: brand and hero imagery.
 
-## Fuentes de mercado consultadas
+## Quality Checks
 
-- Viveros de Atlixco/Cabrera con plantas desde $15 MXN y variedad de sombra, interior, cuna de Moises, alcatraces, cactaceas y gerberas: https://municipiospuebla.mx/nota/de-paseo/los-viveros-de-atlixco-una-belleza-que-debes-conocer
-- Produccion durante todo el año en Cabrera, Atlixco: https://www.lajornadadeoriente.com.mx/puebla/atlixco-cabrera-produccion-plantas-nochebuenas-cempasuchil/
-- Expo SDK 55 y versiones base: https://docs.expo.dev/versions/v55.0.0
+```bash
+npm run lint
+npx tsc --noEmit
+```

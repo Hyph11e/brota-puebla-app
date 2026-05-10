@@ -55,11 +55,11 @@ export default function StoreScreen() {
             <View style={styles.heroContent}>
               <View style={styles.heroPill}>
                 <AppIcon name={icons.clock} color={palette.lime} size={15} />
-                <Text style={styles.heroPillText}>Regalos vivos programados</Text>
+                <Text style={styles.heroPillText}>Edicion Brota Puebla</Text>
               </View>
-              <Text style={styles.heroTitle}>Un regalo vivo para decirlo mejor</Text>
+              <Text style={styles.heroTitle}>Regalos vivos, envueltos para emocionar</Text>
               <Text style={styles.heroCopy}>
-                Plantas elegidas para emocionar, envueltas en negro premium y preparadas por Brota para llegar con calma.
+                Plantas elegidas con intencion, envueltas en negro premium y preparadas para llegar como un gesto inolvidable.
               </Text>
               <View style={styles.heroActions}>
                 <CTAButton label="Regalar ahora" icon={icons.gift} onPress={goToGift} />
@@ -80,7 +80,7 @@ export default function StoreScreen() {
             <MetricTile label="Guia" value="De cuidado" icon={icons.leaf} tone="dark" />
           </View>
 
-          <SectionHeader eyebrow="Catalogo vivo" title="Elige por vibe" action="Preparado por Brota" />
+          <SectionHeader eyebrow="Catalogo vivo" title="Elige por intencion" action="Preparado por Brota" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -171,32 +171,36 @@ const styles = StyleSheet.create({
     backgroundColor: palette.paper,
   },
   hero: {
-    minHeight: 500,
+    minHeight: 560,
     borderRadius: 8,
     overflow: 'hidden',
     backgroundColor: palette.forest,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 18 },
+    shadowOpacity: 0.12,
+    shadowRadius: 28,
   },
   heroImage: {
     ...StyleSheet.absoluteFillObject,
   },
   heroShade: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(13,34,27,0.38)',
+    backgroundColor: 'rgba(13,34,27,0.46)',
   },
   heroContent: {
     flex: 1,
-    padding: spacing.xl,
+    padding: spacing.xxl,
     justifyContent: 'flex-end',
-    gap: spacing.md,
+    gap: 14,
   },
   heroPill: {
     alignSelf: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.xs,
-    backgroundColor: 'rgba(18,34,28,0.72)',
+    backgroundColor: 'rgba(250,248,241,0.14)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    borderColor: 'rgba(255,255,255,0.28)',
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: 8,
@@ -208,18 +212,18 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: palette.paper,
-    fontSize: 45,
-    lineHeight: 48,
+    fontSize: 42,
+    lineHeight: 46,
     fontWeight: '900',
     letterSpacing: 0,
-    maxWidth: 420,
+    maxWidth: 520,
   },
   heroCopy: {
     color: '#F5F4EA',
-    fontSize: 15,
-    lineHeight: 22,
-    fontWeight: '700',
-    maxWidth: 520,
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: '600',
+    maxWidth: 500,
   },
   heroActions: {
     flexDirection: 'row',
@@ -229,7 +233,7 @@ const styles = StyleSheet.create({
   metricsRow: {
     flexDirection: 'row',
     gap: spacing.sm,
-    marginTop: spacing.lg,
+    marginTop: 20,
     flexWrap: 'wrap',
   },
   categoryRow: {
@@ -237,8 +241,8 @@ const styles = StyleSheet.create({
     paddingRight: spacing.lg,
   },
   plantScroller: {
-    gap: spacing.md,
-    paddingTop: spacing.sm,
+    gap: spacing.lg,
+    paddingTop: spacing.md,
     paddingRight: spacing.lg,
   },
   deliveryBand: {
@@ -247,10 +251,10 @@ const styles = StyleSheet.create({
   deliveryPreview: {
     minHeight: 120,
     borderRadius: 8,
-    backgroundColor: '#E9F7FB',
+    backgroundColor: '#F5F0E8',
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.md,
+    padding: spacing.lg,
     gap: spacing.sm,
   },
   deliveryStep: {
@@ -308,11 +312,15 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 230,
     borderRadius: 8,
-    padding: spacing.lg,
+    padding: spacing.xl,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
     gap: spacing.sm,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.05,
+    shadowRadius: 20,
   },
   bundleTitle: {
     color: palette.ink,
@@ -334,11 +342,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 8,
     backgroundColor: palette.forest,
-    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+    padding: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.18,
+    shadowRadius: 26,
   },
   cartLabel: {
     color: '#BFE6CA',

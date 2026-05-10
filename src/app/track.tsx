@@ -82,7 +82,7 @@ export default function TrackScreen() {
             </View>
             <View style={styles.statusBox}>
               <Text style={styles.statusValue}>{delivered ? 'OK' : 'Hoy'}</Text>
-              <Text style={styles.statusLabel}>status</Text>
+              <Text style={styles.statusLabel}>Brota</Text>
             </View>
           </View>
 
@@ -119,7 +119,7 @@ export default function TrackScreen() {
             <MetricTile label="Total" value={formatMXN(total)} icon={icons.card} tone="dark" />
           </View>
 
-          <SectionHeader eyebrow="Pedido" title="Lo que viaja" />
+          <SectionHeader eyebrow="Pedido" title="Lo que va en camino" />
           <View style={styles.orderCard}>
             <MiniPlantVisual plant={plant} compact />
             <View style={styles.orderText}>
@@ -133,11 +133,11 @@ export default function TrackScreen() {
             </View>
           </View>
 
-          <SectionHeader eyebrow="Timeline" title="Del vivero a la puerta" />
+          <SectionHeader eyebrow="Timeline" title="Del empaque a la puerta" />
           <View style={styles.timeline}>
             <TimelineStep
               title="Pedido confirmado"
-              subtitle="Pago recibido, fecha y ventana de entrega guardadas."
+              subtitle="Tu regalo queda reservado con fecha y ventana de entrega."
               active={statusRank[order.status] >= 0}
             />
             <TimelineStep
@@ -146,7 +146,7 @@ export default function TrackScreen() {
               active={statusRank[order.status] >= 1}
             />
             <TimelineStep
-              title="Tu orden va en camino"
+              title="Tu regalo va en camino"
               subtitle={`Equipo Brota listo para la ventana ${deliveryWindow}.`}
               active={statusRank[order.status] >= 2}
             />
@@ -178,9 +178,9 @@ export default function TrackScreen() {
             <CTAButton label="Mandar otro regalo" icon={icons.gift} variant="ghost" onPress={() => router.push('/gift')} />
           </View>
 
-          <SectionHeader eyebrow="Cuidado Brota" title="Protocolo anti-hojas rotas" />
+          <SectionHeader eyebrow="Cuidado Brota" title="Cuidado en traslado" />
           <View style={styles.protocol}>
-            {['Caja ventilada', 'Maceta fija', 'No sol directo', 'Foto antes/despues'].map((item) => (
+            {['Caja ventilada', 'Maceta fija', 'Sombra cuidada', 'Foto de entrega'].map((item) => (
               <Pressable key={item} style={({ pressed }) => [styles.protocolItem, pressed && styles.pressed]}>
                 <AppIcon name={icons.leaf} color={palette.leaf} size={16} />
                 <Text style={styles.protocolText}>{item}</Text>
@@ -199,15 +199,19 @@ const styles = StyleSheet.create({
     backgroundColor: palette.paper,
   },
   emptyCard: {
-    minHeight: 460,
+    minHeight: 500,
     borderRadius: 8,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.xl,
+    padding: spacing.xxl,
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.06,
+    shadowRadius: 26,
   },
   emptyIcon: {
     width: 72,
@@ -242,14 +246,21 @@ const styles = StyleSheet.create({
   },
   statusBand: {
     borderRadius: 8,
-    padding: spacing.xl,
+    minHeight: 240,
+    padding: spacing.xxl,
     backgroundColor: palette.forest,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    flexWrap: 'wrap',
     gap: spacing.lg,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.12,
+    shadowRadius: 28,
   },
   statusText: {
     flex: 1,
+    minWidth: 220,
     gap: spacing.sm,
   },
   orderId: {
@@ -260,22 +271,22 @@ const styles = StyleSheet.create({
   },
   title: {
     color: palette.paper,
-    fontSize: 32,
-    lineHeight: 36,
+    fontSize: 34,
+    lineHeight: 38,
     fontWeight: '900',
     letterSpacing: 0,
   },
   copy: {
     color: '#D6EBDD',
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '600',
   },
   statusBox: {
     width: 82,
     minHeight: 82,
     borderRadius: 8,
-    backgroundColor: palette.lime,
+    backgroundColor: '#F4F0E8',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -296,8 +307,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: palette.line,
     backgroundColor: palette.white,
-    padding: spacing.lg,
+    padding: spacing.xl,
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.05,
+    shadowRadius: 22,
   },
   scheduleRow: {
     flexDirection: 'row',
@@ -336,8 +351,8 @@ const styles = StyleSheet.create({
   },
   notesBox: {
     borderRadius: 8,
-    backgroundColor: palette.mint,
-    padding: spacing.md,
+    backgroundColor: '#F4FAF4',
+    padding: spacing.lg,
   },
   notesText: {
     color: palette.forest,
@@ -357,10 +372,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: palette.line,
     backgroundColor: palette.white,
-    padding: spacing.md,
+    padding: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
   },
   orderText: {
     flex: 1,
@@ -397,17 +416,25 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.lg,
+    padding: spacing.xl,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
   },
   confirmationCard: {
     borderRadius: 8,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.lg,
+    padding: spacing.xl,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
   },
   confirmationText: {
     flex: 1,
@@ -441,7 +468,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: palette.line,
     paddingHorizontal: spacing.md,
-    backgroundColor: palette.white,
+    backgroundColor: '#FFFDFC',
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,

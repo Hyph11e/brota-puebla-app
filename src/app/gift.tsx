@@ -64,9 +64,9 @@ export default function GiftScreen() {
 
           <View style={styles.topBand}>
             <View style={styles.topText}>
-              <Text style={styles.title}>Arma un regalo que no parezca de ultimo minuto</Text>
+              <Text style={styles.title}>Un regalo pensado hasta el ultimo detalle</Text>
               <Text style={styles.copy}>
-                Brota combina planta, empaque, mensaje y entrega cuidada para que el regalo llegue con calma.
+                Elige la intencion, escribe tu mensaje y deja que Brota lo convierta en un gesto elegante.
               </Text>
             </View>
             <View style={styles.topIcon}>
@@ -175,7 +175,7 @@ export default function GiftScreen() {
 
           <View style={styles.previewBand}>
             <View style={styles.previewCard}>
-              <Text style={styles.previewEyebrow}>Preview del regalo</Text>
+              <Text style={styles.previewEyebrow}>Vista del regalo</Text>
               <MiniPlantVisual plant={selectedPlant} />
               <Text style={styles.previewPlant}>{selectedPlant.name}</Text>
               <Text style={styles.previewNote} numberOfLines={3}>
@@ -229,31 +229,38 @@ const styles = StyleSheet.create({
   topBand: {
     borderRadius: 8,
     backgroundColor: palette.forest,
-    padding: spacing.xl,
+    minHeight: 236,
+    padding: spacing.xxl,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    flexWrap: 'wrap',
     gap: spacing.lg,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.12,
+    shadowRadius: 26,
   },
   topText: {
     flex: 1,
+    minWidth: 220,
     gap: spacing.sm,
   },
   title: {
     color: palette.paper,
-    fontSize: 34,
-    lineHeight: 38,
+    fontSize: 36,
+    lineHeight: 40,
     fontWeight: '900',
     letterSpacing: 0,
   },
   copy: {
     color: '#CFE8D7',
-    fontSize: 14,
-    lineHeight: 21,
-    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '600',
   },
   topIcon: {
-    width: 74,
-    height: 74,
+    width: 72,
+    height: 72,
     borderRadius: 8,
     backgroundColor: palette.coral,
     alignItems: 'center',
@@ -271,13 +278,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: palette.line,
     backgroundColor: palette.white,
-    padding: spacing.md,
+    minHeight: 78,
+    padding: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
   },
   bundleRowOn: {
-    backgroundColor: palette.mint,
+    backgroundColor: '#F4FAF4',
     borderColor: palette.leaf,
   },
   bundleIcon: {
@@ -324,27 +336,27 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   input: {
-    minHeight: 48,
+    minHeight: 56,
     borderRadius: 8,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     color: palette.ink,
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   zoneScroller: {
     gap: spacing.sm,
     paddingRight: spacing.lg,
   },
   zoneOption: {
-    minWidth: 172,
+    minWidth: 196,
     borderRadius: 8,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.md,
+    padding: spacing.lg,
     gap: spacing.xs,
   },
   zoneOptionOn: {
@@ -368,25 +380,31 @@ const styles = StyleSheet.create({
     color: '#CFE8D7',
   },
   messageInput: {
-    minHeight: 112,
+    minHeight: 124,
     paddingTop: spacing.md,
     textAlignVertical: 'top',
   },
   previewBand: {
     marginTop: spacing.xl,
     flexDirection: 'row',
-    gap: spacing.md,
+    gap: spacing.lg,
     flexWrap: 'wrap',
   },
   previewCard: {
     flex: 1,
     minWidth: 230,
+    minHeight: 326,
     borderRadius: 8,
-    padding: spacing.lg,
-    backgroundColor: palette.mint,
+    padding: spacing.xxl,
+    backgroundColor: '#F4F0E8',
     borderWidth: 1,
-    borderColor: '#B8DEC5',
+    borderColor: palette.line,
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.05,
+    shadowRadius: 22,
   },
   previewEyebrow: {
     color: palette.coral,
@@ -415,8 +433,12 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.lg,
-    gap: spacing.md,
+    padding: spacing.xl,
+    gap: 14,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.06,
+    shadowRadius: 22,
   },
   summaryTitle: {
     color: palette.ink,
@@ -454,7 +476,7 @@ const styles = StyleSheet.create({
   },
   totalValue: {
     color: palette.leaf,
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: '900',
   },
   timeline: {
@@ -462,7 +484,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
-    padding: spacing.lg,
+    padding: spacing.xl,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
   },
   pressed: {
     opacity: 0.72,
