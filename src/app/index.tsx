@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
   AppIcon,
@@ -29,8 +29,15 @@ const categories: ('Todos' | Plant['category'])[] = [
 
 export default function StoreScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
   const { order, selectCartPlant, startCheckout } = useOrder();
   const [category, setCategory] = useState<(typeof categories)[number]>('Todos');
+  const isMobile = width < 700;
+  const isMobileOrTabletWeb = Platform.OS === 'web' && width <= 900;
+  const compactCart = isMobile || isMobileOrTabletWeb;
+  const cartBottom = compactCart ? 118 + insets.bottom : spacing.lg;
+  const pageBottomInset = compactCart ? 250 + insets.bottom : 110;
 
   const plants = useMemo(
     () => (category === 'Todos' ? catalog : catalog.filter((plant) => plant.category === category)),
@@ -44,10 +51,11 @@ export default function StoreScreen() {
   }
 
   return (
-    <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-      <SafeAreaView edges={['top']}>
-        <Page>
-          <BrandHeader subtitle="Entrega Brota Puebla" />
+    <View style={styles.screen}>
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+        <SafeAreaView edges={['top']}>
+          <Page bottomInset={pageBottomInset}>
+            <BrandHeader subtitle="Entrega Brota Puebla" />
 
           <View style={styles.hero}>
             <Image source={require('@/assets/images/brota-hero.png')} style={styles.heroImage} contentFit="cover" />
@@ -146,26 +154,41 @@ export default function StoreScreen() {
               <Text style={styles.bundleCopy}>Luz, riego y primeros cuidados explicados de forma simple y bonita.</Text>
             </View>
           </View>
-        </Page>
-      </SafeAreaView>
+          </Page>
+        </SafeAreaView>
+      </ScrollView>
 
-      <View style={styles.cartBar}>
+      <View
+        testID="brota-cart-bar"
+        style={[
+          styles.cartBar,
+          compactCart && styles.cartBarCompact,
+          isMobileOrTabletWeb && styles.cartBarWebFixed,
+          { bottom: cartBottom },
+        ]}>
         <View style={styles.cartSummary}>
-          <Text style={styles.cartLabel}>Regalo vivo seleccionado</Text>
-          <Text style={styles.cartTotal} numberOfLines={1}>
+          <Text style={[styles.cartLabel, compactCart && styles.cartLabelCompact]}>Regalo vivo seleccionado</Text>
+          <Text style={[styles.cartTotal, compactCart && styles.cartTotalCompact]} numberOfLines={1}>
             {selectedPlant.name} · {formatMXN(selectedPlant.retailPrice)}
           </Text>
         </View>
-        <Pressable onPress={goToGift} style={({ pressed }) => [styles.cartButton, pressed && styles.pressed]}>
+        <Pressable
+          onPress={goToGift}
+          style={({ pressed }) => [styles.cartButton, compactCart && styles.cartButtonCompact, pressed && styles.pressed]}>
           <AppIcon name={icons.gift} color={palette.paper} size={18} />
-          <Text style={styles.cartButtonText}>Continuar</Text>
+          <Text style={[styles.cartButtonText, compactCart && styles.cartButtonTextCompact]}>Continuar</Text>
         </Pressable>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: palette.paper,
+    position: 'relative',
+  },
   scroll: {
     flex: 1,
     backgroundColor: palette.paper,
@@ -335,6 +358,7 @@ const styles = StyleSheet.create({
   },
   cartBar: {
     position: 'absolute',
+    zIndex: 30,
     left: spacing.lg,
     right: spacing.lg,
     bottom: spacing.lg,
@@ -353,11 +377,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 16 },
     shadowOpacity: 0.18,
     shadowRadius: 26,
+    elevation: 12,
+  },
+  cartBarCompact: {
+    minHeight: 64,
+    padding: 12,
+    borderRadius: 8,
+    gap: spacing.sm,
+  },
+  cartBarWebFixed: {
+    position: 'fixed' as unknown as 'absolute',
   },
   cartLabel: {
     color: '#BFE6CA',
     fontSize: 12,
     fontWeight: '800',
+  },
+  cartLabelCompact: {
+    fontSize: 10,
   },
   cartSummary: {
     flex: 1,
@@ -366,6 +403,9 @@ const styles = StyleSheet.create({
     color: palette.paper,
     fontSize: 20,
     fontWeight: '900',
+  },
+  cartTotalCompact: {
+    fontSize: 15,
   },
   cartButton: {
     backgroundColor: palette.leaf,
@@ -376,10 +416,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.sm,
   },
+  cartButtonCompact: {
+    minHeight: 42,
+    paddingHorizontal: 12,
+  },
   cartButtonText: {
     color: palette.paper,
     fontSize: 14,
     fontWeight: '900',
+  },
+  cartButtonTextCompact: {
+    fontSize: 13,
   },
   pressed: {
     opacity: 0.72,

@@ -7,3 +7,13 @@
   --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
 }
+
+@media (max-width: 900px) {
+  [data-testid='brota-cart-bar'] {
+    position: fixed !important;
+    left: 18px !important;
+    right: 18px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 118px) !important;
+    z-index: 30 !important;
+  }
+}

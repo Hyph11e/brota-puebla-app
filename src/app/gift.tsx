@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
   AppIcon,
@@ -32,9 +32,14 @@ const messageByOccasion: Record<(typeof occasions)[number], string> = {
 
 export default function GiftScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
   const { order, selectBundle, selectPlant, submitOrder, updateGiftDetails } = useOrder();
   const [occasion, setOccasion] = useState<(typeof occasions)[number]>('Gracias');
   const { bundle, deliveryWindow, plant: selectedPlant, total, zone } = getOrderDetails(order);
+  const isMobile = width < 700;
+  const isMobileOrTabletWeb = Platform.OS === 'web' && width <= 900;
+  const pageBottomInset = isMobile || isMobileOrTabletWeb ? 180 + insets.bottom : 110;
 
   const giftPlants = useMemo(
     () => catalog.filter((plant) => bundle.plantIds.includes(plant.id)),
@@ -59,7 +64,7 @@ export default function GiftScreen() {
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <SafeAreaView edges={['top']}>
-        <Page>
+        <Page bottomInset={pageBottomInset}>
           <BrandHeader subtitle="Regalos vivos" />
 
           <View style={styles.topBand}>
