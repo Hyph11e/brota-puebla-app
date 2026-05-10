@@ -1,7 +1,10 @@
+import type { ImageProps } from 'expo-image';
+
 export type Plant = {
   id: string;
   name: string;
   nickname: string;
+  image: ImageProps['source'];
   category: 'Interior' | 'Regalo' | 'Aromatica' | 'Exterior';
   mood: string;
   supplier: string;
@@ -47,6 +50,7 @@ export const catalog: Plant[] = [
     id: 'palo-brasil',
     name: 'Totem Brasil',
     nickname: 'Calma vertical',
+    image: require('@/assets/images/plants/palo-brasil.jpg'),
     category: 'Interior',
     mood: 'quiet luxury',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -74,6 +78,7 @@ export const catalog: Plant[] = [
     id: 'arbol-abundancia',
     name: 'Abundancia Mini',
     nickname: 'Buena fortuna',
+    image: require('@/assets/images/plants/arbol-abundancia.jpg'),
     category: 'Regalo',
     mood: 'optimistic',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -100,6 +105,7 @@ export const catalog: Plant[] = [
     id: 'suculenta-conchita',
     name: 'Conchita Viva',
     nickname: 'Mini gesto',
+    image: require('@/assets/images/plants/suculenta-conchita.jpg'),
     category: 'Regalo',
     mood: 'cute',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -126,6 +132,7 @@ export const catalog: Plant[] = [
     id: 'janet-craig-compacta',
     name: 'Verde Quiet Luxury',
     nickname: 'Minimal elegante',
+    image: require('@/assets/images/plants/janet-craig-compacta.jpg'),
     category: 'Interior',
     mood: 'minimal',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -152,6 +159,7 @@ export const catalog: Plant[] = [
     id: 'aloe-casa',
     name: 'Aloe de Casa',
     nickname: 'Util y bonito',
+    image: require('@/assets/images/plants/aloe-casa.jpg'),
     category: 'Exterior',
     mood: 'practical',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -178,6 +186,7 @@ export const catalog: Plant[] = [
     id: 'pinanona-8',
     name: 'Mini Monstera Puebla',
     nickname: 'La foto segura',
+    image: require('@/assets/images/plants/pinanona-8.jpg'),
     category: 'Regalo',
     mood: 'statement',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -205,6 +214,7 @@ export const catalog: Plant[] = [
     id: 'liston-buena-vibra',
     name: 'Liston Buena Vibra',
     nickname: 'Pet-friendly cool',
+    image: require('@/assets/images/plants/liston-buena-vibra.jpg'),
     category: 'Interior',
     mood: 'easy',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -232,6 +242,7 @@ export const catalog: Plant[] = [
     id: 'sansevierias-mix',
     name: 'Cero Drama',
     nickname: 'Indestructible',
+    image: require('@/assets/images/plants/sansevierias-mix.jpg'),
     category: 'Interior',
     mood: 'architectural',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -259,6 +270,7 @@ export const catalog: Plant[] = [
     id: 'monstera-pinanona',
     name: 'Monstera Editorial',
     nickname: 'Statement verde',
+    image: require('@/assets/images/plants/monstera-pinanona.jpg'),
     category: 'Regalo',
     mood: 'editorial',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -286,6 +298,7 @@ export const catalog: Plant[] = [
     id: 'palma-areca',
     name: 'Palma Hotelito',
     nickname: 'Nuevo depa instantaneo',
+    image: require('@/assets/images/plants/palma-areca.jpg'),
     category: 'Interior',
     mood: 'airy',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -312,6 +325,7 @@ export const catalog: Plant[] = [
     id: 'bromelia-color',
     name: 'Bromelia Pop',
     nickname: 'Color con clase',
+    image: require('@/assets/images/plants/bromelia-color.jpg'),
     category: 'Regalo',
     mood: 'color',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -339,6 +353,7 @@ export const catalog: Plant[] = [
     id: 'xanadu',
     name: 'Xanadu Studio',
     nickname: 'Diseño tropical',
+    image: require('@/assets/images/plants/xanadu.jpg'),
     category: 'Interior',
     mood: 'design',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -365,6 +380,7 @@ export const catalog: Plant[] = [
     id: 'orquidea-64',
     name: 'Orquidea Ceremonia',
     nickname: 'Elegancia alta',
+    image: require('@/assets/images/plants/orquidea-64.jpg'),
     category: 'Regalo',
     mood: 'elegant',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -392,6 +408,7 @@ export const catalog: Plant[] = [
     id: 'orquidea-10',
     name: 'Orquidea Mini Noir',
     nickname: 'Detalle fino',
+    image: require('@/assets/images/plants/orquidea-10.jpg'),
     category: 'Regalo',
     mood: 'delicate',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -418,6 +435,7 @@ export const catalog: Plant[] = [
     id: 'ave-paraiso',
     name: 'Ave de Paraiso Signature',
     nickname: 'Arquitectura viva',
+    image: require('@/assets/images/plants/ave-paraiso.jpg'),
     category: 'Interior',
     mood: 'signature',
     supplier: 'Referencia interna retail / viveros Puebla',
@@ -445,6 +463,7 @@ export const catalog: Plant[] = [
     id: 'gerbera-drop',
     name: 'Gerbera Drop',
     nickname: 'Color de temporada',
+    image: require('@/assets/images/plants/gerbera-drop.jpg'),
     category: 'Regalo',
     mood: 'seasonal',
     supplier: 'Referencia interna retail / viveros Puebla',

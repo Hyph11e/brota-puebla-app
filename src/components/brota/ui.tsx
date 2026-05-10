@@ -193,6 +193,20 @@ export function CTAButton({
 }
 
 export function MiniPlantVisual({ plant, compact }: { plant: Plant; compact?: boolean }) {
+  if (plant.image) {
+    return (
+      <View style={[styles.plantPhotoFrame, compact && styles.plantPhotoFrameCompact]}>
+        <Image
+          source={plant.image}
+          style={styles.plantPhoto}
+          contentFit="cover"
+          cachePolicy="memory-disk"
+          transition={180}
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.plantVisual, compact && styles.plantVisualCompact]}>
       <View style={[styles.leafLeft, { backgroundColor: plant.color }]} />
@@ -480,6 +494,20 @@ const styles = StyleSheet.create({
     width: 72,
     height: 76,
   },
+  plantPhotoFrame: {
+    width: '100%',
+    aspectRatio: 4 / 5,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#F4F0E8',
+  },
+  plantPhotoFrameCompact: {
+    width: 76,
+  },
+  plantPhoto: {
+    width: '100%',
+    height: '100%',
+  },
   leafLeft: {
     position: 'absolute',
     width: '34%',
@@ -538,7 +566,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4FAF4',
   },
   plantArtStage: {
-    minHeight: 150,
+    aspectRatio: 4 / 5,
     borderRadius: 8,
     backgroundColor: '#F6F1E7',
     alignItems: 'center',
