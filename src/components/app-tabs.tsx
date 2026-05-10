@@ -11,8 +11,14 @@ export default function AppTabs() {
   return (
     <NativeTabs
       backgroundColor={colors.background}
+      blurEffect="systemUltraThinMaterial"
+      iconColor={{ default: colors.textSecondary, selected: colors.text }}
       indicatorColor={colors.backgroundElement}
-      labelStyle={{ selected: { color: colors.text } }}>
+      shadowColor="rgba(13,34,27,0.12)"
+      labelStyle={{
+        default: { color: colors.textSecondary, fontSize: 12, fontWeight: '700' },
+        selected: { color: colors.text, fontSize: 12, fontWeight: '800' },
+      }}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Tienda</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
