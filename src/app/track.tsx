@@ -36,6 +36,32 @@ const statusRank: Record<OrderStatus, number> = {
 export default function TrackScreen() {
   const router = useRouter();
   const { order } = useOrder();
+
+  if (!order.hasSubmittedOrder) {
+    return (
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+        <SafeAreaView edges={['top']}>
+          <Page>
+            <BrandHeader subtitle="Estado de pedido" />
+            <View style={styles.emptyCard}>
+              <View style={styles.emptyIcon}>
+                <AppIcon name={icons.gift} color={palette.paper} size={30} />
+              </View>
+              <Text style={styles.emptyTitle}>Aun no hay un regalo en camino</Text>
+              <Text style={styles.emptyCopy}>
+                Cuando envies un regalo Brota, aqui veras su fecha, ventana de entrega y confirmacion.
+              </Text>
+              <View style={styles.emptyActions}>
+                <CTAButton label="Armar regalo" icon={icons.gift} onPress={() => router.push('/gift')} />
+                <CTAButton label="Ver plantas" icon={icons.leaf} variant="ghost" onPress={() => router.push('/')} />
+              </View>
+            </View>
+          </Page>
+        </SafeAreaView>
+      </ScrollView>
+    );
+  }
+
   const { deliveryWindow, plant, total } = getOrderDetails(order);
   const delivered = order.status === 'delivered';
 
@@ -171,6 +197,48 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     backgroundColor: palette.paper,
+  },
+  emptyCard: {
+    minHeight: 460,
+    borderRadius: 8,
+    backgroundColor: palette.white,
+    borderWidth: 1,
+    borderColor: palette.line,
+    padding: spacing.xl,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.md,
+  },
+  emptyIcon: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    backgroundColor: palette.forest,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyTitle: {
+    color: palette.ink,
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: '900',
+    textAlign: 'center',
+    letterSpacing: 0,
+  },
+  emptyCopy: {
+    color: palette.muted,
+    fontSize: 14,
+    lineHeight: 21,
+    fontWeight: '700',
+    textAlign: 'center',
+    maxWidth: 360,
+  },
+  emptyActions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    marginTop: spacing.sm,
   },
   statusBand: {
     borderRadius: 8,

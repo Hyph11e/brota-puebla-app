@@ -17,7 +17,7 @@ import {
   spacing,
   TimelineStep,
 } from '@/components/brota/ui';
-import { bundles, catalog, formatMXN } from '@/data/catalog';
+import { bundles, catalog, deliveryZones, formatMXN } from '@/data/catalog';
 import { getOrderDetails, useOrder } from '@/state/order';
 
 const occasions = ['Crush', 'Cumple', 'Gracias', 'Nuevo depa', 'Perdon'] as const;
@@ -127,14 +127,38 @@ export default function GiftScreen() {
           <SectionHeader eyebrow="4" title="Mensaje y entrega" />
           <View style={styles.formGrid}>
             <View style={styles.inputBlock}>
-              <Text style={styles.inputLabel}>Destinatario y zona</Text>
+              <Text style={styles.inputLabel}>Destinatario</Text>
               <TextInput
                 value={order.recipient}
                 onChangeText={(recipient) => updateGiftDetails({ recipient })}
-                placeholder="Nombre, colonia"
+                placeholder="Nombre, direccion o referencia"
                 placeholderTextColor={palette.muted}
                 style={styles.input}
               />
+            </View>
+            <View style={styles.inputBlock}>
+              <Text style={styles.inputLabel}>Zona de entrega</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.zoneScroller}>
+                {deliveryZones.map((item) => {
+                  const selected = item.name === order.zoneName;
+
+                  return (
+                    <Pressable
+                      key={item.name}
+                      onPress={() => updateGiftDetails({ zoneName: item.name })}
+                      style={({ pressed }) => [
+                        styles.zoneOption,
+                        selected && styles.zoneOptionOn,
+                        pressed && styles.pressed,
+                      ]}>
+                      <Text style={[styles.zoneOptionName, selected && styles.zoneOptionNameOn]}>{item.name}</Text>
+                      <Text style={[styles.zoneOptionMeta, selected && styles.zoneOptionMetaOn]}>
+                        {item.deliveryWindow} · {formatMXN(item.fee)}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
             </View>
             <View style={styles.inputBlock}>
               <Text style={styles.inputLabel}>Mensaje</Text>
@@ -159,7 +183,7 @@ export default function GiftScreen() {
               </Text>
             </View>
             <View style={styles.summary}>
-              <Text style={styles.summaryTitle}>Checkout express</Text>
+              <Text style={styles.summaryTitle}>Resumen del regalo</Text>
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryLabel}>{selectedPlant.name}</Text>
                 <Text style={styles.summaryValue}>{formatMXN(selectedPlant.retailPrice)}</Text>
@@ -186,7 +210,7 @@ export default function GiftScreen() {
 
           <SectionHeader eyebrow="Entrega" title="Promesa Brota" />
           <View style={styles.timeline}>
-            <TimelineStep title="Compra validada" subtitle="Pago con tarjeta, transferencia o efectivo al recoger." active />
+            <TimelineStep title="Pedido confirmado" subtitle="Tu regalo queda preparado con tarjeta, empaque y guia de cuidado." active />
             <TimelineStep title="Empaque Brota" subtitle="Maceta limpia, tarjeta, QR de cuidado y foto de salida." active />
             <TimelineStep title="Ruta Brota lista" subtitle={`Entrega programada ${deliveryWindow}, sin maltratar hojas ni flores.`} />
             <TimelineStep title="Foto de entrega" subtitle={`Confirmacion para ${order.recipient || 'tu destinatario'}.`} last />
@@ -309,6 +333,39 @@ const styles = StyleSheet.create({
     color: palette.ink,
     fontSize: 15,
     fontWeight: '700',
+  },
+  zoneScroller: {
+    gap: spacing.sm,
+    paddingRight: spacing.lg,
+  },
+  zoneOption: {
+    minWidth: 172,
+    borderRadius: 8,
+    backgroundColor: palette.white,
+    borderWidth: 1,
+    borderColor: palette.line,
+    padding: spacing.md,
+    gap: spacing.xs,
+  },
+  zoneOptionOn: {
+    backgroundColor: palette.forest,
+    borderColor: palette.forest,
+  },
+  zoneOptionName: {
+    color: palette.ink,
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  zoneOptionNameOn: {
+    color: palette.paper,
+  },
+  zoneOptionMeta: {
+    color: palette.muted,
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  zoneOptionMetaOn: {
+    color: '#CFE8D7',
   },
   messageInput: {
     minHeight: 112,

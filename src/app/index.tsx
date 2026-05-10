@@ -17,29 +17,26 @@ import {
   SectionHeader,
   spacing,
 } from '@/components/brota/ui';
-import { brand, catalog, deliveryZones, formatMXN, Plant } from '@/data/catalog';
+import { catalog, deliveryZones, formatMXN, Plant } from '@/data/catalog';
 import { useOrder } from '@/state/order';
 
 const categories: ('Todos' | Plant['category'])[] = [
   'Todos',
   'Interior',
   'Regalo',
-  'Aromatica',
   'Exterior',
 ];
 
 export default function StoreScreen() {
   const router = useRouter();
-  const { order, startCheckout, toggleCartPlant } = useOrder();
+  const { order, selectCartPlant, startCheckout } = useOrder();
   const [category, setCategory] = useState<(typeof categories)[number]>('Todos');
-  const cart = order.cartPlantIds;
 
   const plants = useMemo(
     () => (category === 'Todos' ? catalog : catalog.filter((plant) => plant.category === category)),
     [category],
   );
-  const cartItems = catalog.filter((plant) => cart.includes(plant.id));
-  const subtotal = cartItems.reduce((sum, plant) => sum + plant.retailPrice, 0);
+  const selectedPlant = catalog.find((plant) => plant.id === order.plantId) ?? catalog[0];
 
   function goToGift() {
     startCheckout();
@@ -58,10 +55,12 @@ export default function StoreScreen() {
             <View style={styles.heroContent}>
               <View style={styles.heroPill}>
                 <AppIcon name={icons.clock} color={palette.lime} size={15} />
-                <Text style={styles.heroPillText}>Entregas programadas hoy</Text>
+                <Text style={styles.heroPillText}>Regalos vivos programados</Text>
               </View>
-              <Text style={styles.heroTitle}>Plantas lindas para hoy</Text>
-              <Text style={styles.heroCopy}>{brand.promise}</Text>
+              <Text style={styles.heroTitle}>Un regalo vivo para decirlo mejor</Text>
+              <Text style={styles.heroCopy}>
+                Plantas elegidas para emocionar, envueltas en negro premium y preparadas por Brota para llegar con calma.
+              </Text>
               <View style={styles.heroActions}>
                 <CTAButton label="Regalar ahora" icon={icons.gift} onPress={goToGift} />
                 <CTAButton
@@ -75,12 +74,13 @@ export default function StoreScreen() {
           </View>
 
           <View style={styles.metricsRow}>
-            <MetricTile label="Ticket meta" value="$260+" icon={icons.cart} tone="green" />
-            <MetricTile label="Entrega" value="Hoy" icon={icons.clock} tone="blue" />
-            <MetricTile label="Margen ops" value="50%+" icon={icons.graph} tone="coral" />
+            <MetricTile label="Entrega" value="Programada" icon={icons.clock} tone="blue" />
+            <MetricTile label="Empaque" value="Premium" icon={icons.gift} tone="green" />
+            <MetricTile label="Tarjeta" value="Personalizada" icon={icons.card} tone="coral" />
+            <MetricTile label="Guia" value="De cuidado" icon={icons.leaf} tone="dark" />
           </View>
 
-          <SectionHeader eyebrow="Catalogo vivo" title="Elige por vibe" action="Stock Puebla" />
+          <SectionHeader eyebrow="Catalogo vivo" title="Elige por vibe" action="Preparado por Brota" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -104,8 +104,8 @@ export default function StoreScreen() {
               <PlantCard
                 key={plant.id}
                 plant={plant}
-                selected={cart.includes(plant.id)}
-                onAdd={() => toggleCartPlant(plant.id)}
+                selected={plant.id === order.plantId}
+                onAdd={() => selectCartPlant(plant.id)}
               />
             ))}
           </ScrollView>
@@ -125,7 +125,7 @@ export default function StoreScreen() {
                 <View key={zone.name} style={styles.zoneRow}>
                   <View>
                     <Text style={styles.zoneName}>{zone.name}</Text>
-                    <Text style={styles.zoneMeta}>{zone.demand} demanda</Text>
+                    <Text style={styles.zoneMeta}>Ventana cuidada</Text>
                   </View>
                   <Text style={styles.zoneEta}>{zone.deliveryWindow}</Text>
                 </View>
@@ -133,34 +133,34 @@ export default function StoreScreen() {
             </View>
           </View>
 
-          <SectionHeader eyebrow="Paquetes" title="Para vender y regalar mas" />
+          <SectionHeader eyebrow="Paquetes" title="Para regalar con intencion" />
           <View style={styles.bundleGrid}>
             <View style={styles.bundleCard}>
               <AppIcon name={icons.gift} color={palette.coral} size={24} />
-              <Text style={styles.bundleTitle}>Tarjeta con mensaje real</Text>
-              <Text style={styles.bundleCopy}>Sin copy acartonado: tonos para crush, cumple, gracias o nuevo depa.</Text>
+              <Text style={styles.bundleTitle}>Tarjeta personalizada</Text>
+              <Text style={styles.bundleCopy}>Mensaje impreso con intención, para crush, cumple, gracias o nuevo depa.</Text>
             </View>
             <View style={styles.bundleCard}>
               <AppIcon name={icons.spark} color={palette.blue} size={24} />
-              <Text style={styles.bundleTitle}>QR de cuidado</Text>
-              <Text style={styles.bundleCopy}>El regalo sigue vivo con recordatorios de agua, luz y rescate.</Text>
+              <Text style={styles.bundleTitle}>Guía de cuidado</Text>
+              <Text style={styles.bundleCopy}>Luz, riego y primeros cuidados explicados de forma simple y bonita.</Text>
             </View>
           </View>
         </Page>
       </SafeAreaView>
 
-      {cart.length ? (
-        <View style={styles.cartBar}>
-          <View>
-            <Text style={styles.cartLabel}>{cart.length} planta{cart.length > 1 ? 's' : ''} lista{cart.length > 1 ? 's' : ''}</Text>
-            <Text style={styles.cartTotal}>{formatMXN(subtotal)}</Text>
-          </View>
-          <Pressable onPress={goToGift} style={({ pressed }) => [styles.cartButton, pressed && styles.pressed]}>
-            <AppIcon name={icons.cart} color={palette.paper} size={18} />
-            <Text style={styles.cartButtonText}>Checkout</Text>
-          </Pressable>
+      <View style={styles.cartBar}>
+        <View style={styles.cartSummary}>
+          <Text style={styles.cartLabel}>Regalo vivo seleccionado</Text>
+          <Text style={styles.cartTotal} numberOfLines={1}>
+            {selectedPlant.name} · {formatMXN(selectedPlant.retailPrice)}
+          </Text>
         </View>
-      ) : null}
+        <Pressable onPress={goToGift} style={({ pressed }) => [styles.cartButton, pressed && styles.pressed]}>
+          <AppIcon name={icons.gift} color={palette.paper} size={18} />
+          <Text style={styles.cartButtonText}>Continuar</Text>
+        </Pressable>
+      </View>
     </ScrollView>
   );
 }
@@ -344,6 +344,9 @@ const styles = StyleSheet.create({
     color: '#BFE6CA',
     fontSize: 12,
     fontWeight: '800',
+  },
+  cartSummary: {
+    flex: 1,
   },
   cartTotal: {
     color: palette.paper,

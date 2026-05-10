@@ -46,13 +46,13 @@ npm run serve:web
 Los datos viven en `src/data/catalog.ts`. Cada planta incluye:
 
 - costo estimado de adquisicion
-- costo de preparacion/empaque
+- costo de envoltura negra premium, tarjeta y guia QR
 - reserva de entrega
 - precio al cliente
-- margen bruto calculado
-- dificultad de cuidado, luz, riego, pet friendliness, disponibilidad y linea de regalo
+- margen bruto antes de entrega y margen neto posterior a reserva
+- dificultad de cuidado, luz, riego, pet friendliness, disponibilidad, riesgo operativo y linea de regalo
 
-La estrategia de margen usa plantas de alta rotacion y bajo riesgo logistico como pothos, sansevieria, zamioculca, peperomia, cinta, palma de salon, echeveria, haworthia, aloe, cuna de Moises, anturio, romero y lavanda. El panel `Ops` deja visible el calculo para operar el negocio, pero esa informacion no deberia mostrarse a clientes en produccion.
+La estrategia de lanzamiento usa plantas de alta rotacion y bajo riesgo logistico como Palo de Brasil, Arbol de la abundancia, Suculenta conchita, Janet Craig compacta, Aloe vera, Pinanona 8, Liston y Sansevierias mix, con premium SKUs como Monstera pinanona, Palma areca, Bromelia, Xanadu, Orquideas y Ave de paraiso. El panel `Ops` deja visible el calculo para operar el negocio, pero esa informacion no deberia mostrarse a clientes en produccion.
 
 ## Fuentes de mercado consultadas
 

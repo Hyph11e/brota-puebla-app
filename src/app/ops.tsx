@@ -17,23 +17,24 @@ import {
   catalog,
   formatMXN,
   grossMargin,
-  grossProfit,
   landedCost,
   markupOverCost,
+  netMarginAfterDelivery,
+  netProfitAfterDelivery,
   sourcingNotes,
 } from '@/data/catalog';
 
 const starterPlan = [
-  { id: 'echeveria-rosita', units: 30 },
-  { id: 'haworthia-zebra', units: 18 },
-  { id: 'pothos-jade', units: 16 },
-  { id: 'sansevieria-laurentii', units: 12 },
-  { id: 'peperomia-obtusifolia', units: 10 },
-  { id: 'cinta-malamadre', units: 10 },
-  { id: 'palma-salon', units: 8 },
-  { id: 'zamioculca-zanzibar', units: 6 },
-  { id: 'cuna-moises', units: 8 },
-  { id: 'anturio-rojo', units: 6 },
+  { id: 'sansevierias-mix', units: 14 },
+  { id: 'pinanona-8', units: 12 },
+  { id: 'liston-buena-vibra', units: 12 },
+  { id: 'palo-brasil', units: 10 },
+  { id: 'suculenta-conchita', units: 18 },
+  { id: 'janet-craig-compacta', units: 8 },
+  { id: 'aloe-casa', units: 10 },
+  { id: 'arbol-abundancia', units: 10 },
+  { id: 'monstera-pinanona', units: 4 },
+  { id: 'orquidea-64', units: 4 },
 ];
 
 const planRows = starterPlan
@@ -45,7 +46,7 @@ const planRows = starterPlan
       units: line.units,
       cost: landedCost(plant) * line.units,
       revenue: plant.retailPrice * line.units,
-      profit: grossProfit(plant) * line.units,
+      profit: netProfitAfterDelivery(plant) * line.units,
     };
   })
   .filter(Boolean) as {
@@ -87,8 +88,8 @@ export default function OpsScreen() {
           <View style={styles.metrics}>
             <MetricTile label="Inversion lote" value={formatMXN(totalCost)} icon={icons.card} tone="blue" />
             <MetricTile label="Venta esperada" value={formatMXN(totalRevenue)} icon={icons.cart} tone="green" />
-            <MetricTile label="Utilidad bruta" value={formatMXN(totalProfit)} icon={icons.graph} tone="coral" />
-            <MetricTile label="Margen" value={`${avgMargin}%`} icon={icons.spark} tone="dark" />
+            <MetricTile label="Utilidad neta" value={formatMXN(totalProfit)} icon={icons.graph} tone="coral" />
+            <MetricTile label="Margen neto" value={`${avgMargin}%`} icon={icons.spark} tone="dark" />
           </View>
 
           <SectionHeader eyebrow="Catalogo rentable" title="Plantas faciles de adquirir" action="No publico" />
@@ -110,7 +111,7 @@ export default function OpsScreen() {
                 </View>
                 <View style={styles.planRight}>
                   <Text style={styles.planProfit}>{formatMXN(row.profit)}</Text>
-                  <Text style={styles.planMargin}>{grossMargin(row.plant)}% margen</Text>
+                  <Text style={styles.planMargin}>{grossMargin(row.plant)}% bruto · {netMarginAfterDelivery(row.plant)}% neto</Text>
                 </View>
               </View>
             ))}
@@ -122,11 +123,13 @@ export default function OpsScreen() {
               <View key={plant.id} style={styles.formulaCard}>
                 <Text style={styles.formulaTitle}>{plant.name}</Text>
                 <Text style={styles.formulaLine}>Compra: {formatMXN(plant.acquisitionCost)}</Text>
-                <Text style={styles.formulaLine}>Prep + entrega: {formatMXN(plant.prepCost + plant.deliveryReserve)}</Text>
+                <Text style={styles.formulaLine}>Empaque Brota: {formatMXN(plant.packagingCost)}</Text>
+                <Text style={styles.formulaLine}>Reserva entrega: {formatMXN(plant.deliveryReserve)}</Text>
                 <Text style={styles.formulaStrong}>Precio: {formatMXN(plant.retailPrice)}</Text>
                 <Text style={styles.formulaBadge}>
-                  {grossMargin(plant)}% margen · {markupOverCost(plant)}% markup
+                  {grossMargin(plant)}% bruto · {netMarginAfterDelivery(plant)}% neto · {markupOverCost(plant)}% markup
                 </Text>
+                <Text style={styles.formulaLine}>Riesgo: {plant.operationalRisk}</Text>
               </View>
             ))}
           </View>

@@ -6,8 +6,9 @@ import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import {
   formatMXN,
   grossMargin,
-  grossProfit,
   landedCost,
+  netMarginAfterDelivery,
+  netProfitAfterDelivery,
   Plant,
 } from '@/data/catalog';
 
@@ -217,7 +218,9 @@ export function PlantCard({
     <View style={[styles.plantCard, selected && styles.plantCardSelected]}>
       <View style={styles.plantTopRow}>
         <View>
-          <Text style={styles.plantCategory}>{plant.category}</Text>
+          <Text style={[styles.plantCategory, plant.hero && styles.plantCategoryHero]}>
+            {plant.hero ? 'Firma Brota' : plant.category}
+          </Text>
           <Text style={styles.plantName}>{plant.name}</Text>
         </View>
         <MiniPlantVisual plant={plant} compact />
@@ -240,22 +243,25 @@ export function PlantCard({
         </View>
         <View style={styles.smallTag}>
           <AppIcon name={icons.spark} color={palette.leaf} size={12} />
-          <Text style={styles.smallTagText}>{plant.availability}</Text>
+          <Text style={styles.smallTagText}>{plant.hero ? 'Firma Brota' : 'Regalo vivo'}</Text>
         </View>
       </View>
       <Text style={styles.giftFit} numberOfLines={2}>
         {plant.giftSuitability}
       </Text>
+      <Text style={styles.presentationLine} numberOfLines={2}>
+        {plant.presentation}
+      </Text>
       {showMargin ? (
         <View style={styles.marginStrip}>
           <Text style={styles.marginText}>Costo {formatMXN(landedCost(plant))}</Text>
-          <Text style={styles.marginStrong}>Margen {grossMargin(plant)}%</Text>
+          <Text style={styles.marginStrong}>Bruto {grossMargin(plant)}% · Neto {netMarginAfterDelivery(plant)}%</Text>
         </View>
       ) : null}
       <View style={styles.priceRow}>
         <View>
           <Text style={styles.price}>{formatMXN(plant.retailPrice)}</Text>
-          {showMargin ? <Text style={styles.profit}>+{formatMXN(grossProfit(plant))}</Text> : null}
+          {showMargin ? <Text style={styles.profit}>+{formatMXN(netProfitAfterDelivery(plant))}</Text> : null}
         </View>
         <Pressable onPress={onAdd} style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}>
           <AppIcon name={selected ? icons.cart : icons.plus} color={palette.paper} size={16} />
@@ -514,13 +520,17 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
   },
   plantCard: {
-    width: 210,
-    minHeight: 334,
+    width: 232,
+    minHeight: 382,
     borderRadius: 8,
-    padding: spacing.md,
+    padding: spacing.lg,
     backgroundColor: palette.white,
     borderWidth: 1,
     borderColor: palette.line,
+    shadowColor: '#0D221B',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
   },
   plantCardSelected: {
     borderColor: palette.leaf,
@@ -537,11 +547,14 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     textTransform: 'uppercase',
   },
+  plantCategoryHero: {
+    color: palette.leaf,
+  },
   plantName: {
     color: palette.ink,
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: '900',
-    maxWidth: 118,
+    maxWidth: 134,
     letterSpacing: 0,
   },
   plantNickname: {
@@ -552,7 +565,7 @@ const styles = StyleSheet.create({
   },
   plantCare: {
     marginTop: spacing.xs,
-    minHeight: 36,
+    minHeight: 54,
     color: palette.muted,
     fontSize: 12,
     lineHeight: 18,
@@ -591,6 +604,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     fontWeight: '900',
+  },
+  presentationLine: {
+    marginTop: spacing.sm,
+    color: palette.forest,
+    fontSize: 11,
+    lineHeight: 15,
+    fontWeight: '800',
   },
   marginStrip: {
     marginTop: spacing.sm,

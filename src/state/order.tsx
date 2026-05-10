@@ -2,7 +2,7 @@ import React, { createContext, useContext, useMemo, useState } from 'react';
 
 import { bundles, catalog, deliveryZones } from '@/data/catalog';
 
-const defaultPlantId = 'pothos-jade';
+const defaultPlantId = 'sansevierias-mix';
 const defaultBundleId = getBundleIdForPlant(defaultPlantId);
 const defaultZoneName = deliveryZones[1]?.name ?? deliveryZones[0].name;
 
@@ -21,11 +21,12 @@ export type OrderState = {
   brotaLeadName: string;
   orderId: string;
   status: OrderStatus;
+  hasSubmittedOrder: boolean;
 };
 
 type OrderContextValue = {
   order: OrderState;
-  toggleCartPlant: (plantId: string) => void;
+  selectCartPlant: (plantId: string) => void;
   startCheckout: () => void;
   selectPlant: (plantId: string) => void;
   selectBundle: (bundleId: string) => void;
@@ -50,6 +51,7 @@ const initialOrder: OrderState = {
   brotaLeadName: 'Luis M.',
   orderId: 'BR-0427',
   status: 'confirmed',
+  hasSubmittedOrder: false,
 };
 
 export function OrderProvider({ children }: { children: React.ReactNode }) {
@@ -58,36 +60,25 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<OrderContextValue>(
     () => ({
       order,
-      toggleCartPlant(plantId) {
+      selectCartPlant(plantId) {
         setOrder((current) => {
-          const wasInCart = current.cartPlantIds.includes(plantId);
-          const cartPlantIds = wasInCart
-            ? current.cartPlantIds.filter((item) => item !== plantId)
-            : [...current.cartPlantIds, plantId];
-          const nextPlantId = wasInCart
-            ? plantId === current.plantId
-              ? cartPlantIds[0] ?? current.plantId
-              : current.plantId
-            : plantId;
-
           return {
             ...current,
-            cartPlantIds,
-            plantId: nextPlantId,
-            bundleId: bundleIncludesPlant(current.bundleId, nextPlantId)
+            cartPlantIds: [plantId],
+            plantId,
+            bundleId: bundleIncludesPlant(current.bundleId, plantId)
               ? current.bundleId
-              : getBundleIdForPlant(nextPlantId),
+              : getBundleIdForPlant(plantId),
           };
         });
       },
       startCheckout() {
         setOrder((current) => {
-          const plantId = current.cartPlantIds.includes(current.plantId)
-            ? current.plantId
-            : current.cartPlantIds[0] ?? current.plantId;
+          const plantId = current.plantId;
 
           return {
             ...current,
+            cartPlantIds: [plantId],
             plantId,
             bundleId: bundleIncludesPlant(current.bundleId, plantId)
               ? current.bundleId
@@ -99,9 +90,7 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
         setOrder((current) => ({
           ...current,
           plantId,
-          cartPlantIds: current.cartPlantIds.includes(plantId)
-            ? current.cartPlantIds
-            : [plantId, ...current.cartPlantIds],
+          cartPlantIds: [plantId],
         }));
       },
       selectBundle(bundleId) {
@@ -115,9 +104,7 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
             ...current,
             bundleId,
             plantId,
-            cartPlantIds: current.cartPlantIds.includes(plantId)
-              ? current.cartPlantIds
-              : [plantId, ...current.cartPlantIds],
+            cartPlantIds: [plantId],
           };
         });
       },
@@ -139,6 +126,7 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
           ...current,
           orderId: current.orderId.startsWith('BR-') ? current.orderId : 'BR-0427',
           status: 'preparing',
+          hasSubmittedOrder: true,
         }));
       },
     }),
